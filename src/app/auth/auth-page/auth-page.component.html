@@ -1,0 +1,118 @@
+<div class="auth-container">
+  <p-card>
+    <h2>
+      {{
+        signInMode ? ("AUTH.SIGNIN" | translate) : ("AUTH.SIGNUP" | translate)
+      }}
+    </h2>
+    @if(signInMode){
+    <form
+      [formGroup]="signInForm"
+      class="form-container"
+      (ngSubmit)="loginUser()"
+    >
+      <label for="username">{{ "AUTH.EMAIL" | translate }}</label>
+      <input
+        pInputText
+        id="username"
+        aria-describedby="username-help"
+        formControlName="email"
+      />
+      <label for="password">{{ "AUTH.PASSWORD" | translate }}</label>
+      <input
+        pInputText
+        id="password"
+        aria-describedby="username-help"
+        type="password"
+        formControlName="password"
+      />
+      <span class="no-account" (click)="toggleMode()">{{
+        "AUTH.NO_ACCOUNT" | translate
+      }}</span>
+      <button
+        pButton
+        pRipple
+        label="{{ 'AUTH.SIGNIN' | translate }}"
+        class="p-button-warning"
+        [disabled]="signInForm.invalid"
+      ></button>
+    </form>
+    } @else {
+    <form
+      [formGroup]="signUpForm"
+      class="form-container"
+      (ngSubmit)="registerUser()"
+    >
+      <label for="email">{{ "AUTH.EMAIL" | translate }}</label>
+      <input
+        pInputText
+        id="email"
+        aria-describedby="username-help"
+        formControlName="email"
+      />
+      <div class="form-row">
+        <div class="input-cont">
+          <label for="password">{{ "AUTH.PASSWORD" | translate }}</label>
+          <input
+            pInputText
+            id="password"
+            aria-describedby="username-help"
+            type="password"
+            formControlName="password"
+          />
+        </div>
+        <div class="input-cont">
+          <label for="confirmPassword">{{
+            "AUTH.CONFIRM_PASSWORD" | translate
+          }}</label>
+          <input
+            pInputText
+            id="confirmPassword"
+            aria-describedby="username-help"
+            type="password"
+            formControlName="confirmPassword"
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="input-cont">
+          <label for="firstName">{{ "AUTH.FIRSTNAME" | translate }}</label>
+          <input
+            pInputText
+            id="firstName"
+            aria-describedby="username-help"
+            formControlName="firstName"
+          />
+        </div>
+        <div class="input-cont">
+          <label for="lastName">{{ "AUTH.LASTNAME" | translate }}</label>
+          <input
+            pInputText
+            id="lastName"
+            aria-describedby="username-help"
+            formControlName="lastName"
+          />
+        </div>
+      </div>
+
+      <label for="dateOfBirth">{{ "AUTH.DATE_OF_BIRTH" | translate }}</label>
+      <p-calendar
+        [iconDisplay]="'input'"
+        [showIcon]="true"
+        inputId="icondisplay"
+        formControlName="dateOfBirth"
+      />
+      <span class="no-account" (click)="toggleMode()">{{
+        "AUTH.NO_ACCOUNT" | translate
+      }}</span>
+      <button
+        pButton
+        pRipple
+        label="{{ 'AUTH.SIGNUP' | translate }}"
+        class="p-button-warning"
+        [disabled]="signUpForm.invalid"
+      ></button>
+    </form>
+    }
+  </p-card>
+</div>

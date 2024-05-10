@@ -1,0 +1,43 @@
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+
+  .form-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 30vw;
+
+    .form-row {
+      display: flex;
+      gap: 10px;
+
+      .input-cont {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    input {
+      height: 45px;
+    }
+
+    button {
+      margin-top: 15px;
+    }
+
+    .no-account {
+      font-size: 0.9rem;
+      text-decoration: underline;
+      cursor: pointer;
+
+      &:hover {
+        color: orange;
+      }
+    }
+  }
+}

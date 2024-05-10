@@ -1,0 +1,20 @@
+.container {
+  border-bottom: 3px solid orange;
+  padding: 0px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .tabs-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .signinBtn {
+      color: white;
+      background-color: orange;
+      padding: 10px;
+    }
+  }
+}

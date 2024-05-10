@@ -1,0 +1,14 @@
+{
+  "AUTH": {
+    "SIGNIN": "Sign in",
+    "SIGNUP": "Sign up",
+    "NO_ACCOUNT": "Dont have an account? Register",
+    "EMAIL": "Email address",
+    "PASSWORD": "Password",
+    "CONFIRM_PASSWORD": "Confirm password",
+    "FIRSTNAME": "First name",
+    "LASTNAME": "Last name",
+    "DATE_OF_BIRTH": "Date of birth"
+  },
+  "SHARED": {}
+}
