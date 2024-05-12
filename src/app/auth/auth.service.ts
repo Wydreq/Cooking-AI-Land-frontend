@@ -2,18 +2,36 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environment';
 import { FormGroup } from '@angular/forms';
-
+import { IToken } from '../shared/interfaces/token.interface';
+import { BehaviorSubject } from 'rxjs';
+import { IUser } from '../shared/interfaces/user.interface';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { producerUpdateValueVersion } from '@angular/core/primitives/signals';
+import { PopupState } from '../shared/types/PopupState';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  $user = new BehaviorSubject<IUser | null>(null);
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
 
   registerUser(form: FormGroup) {
     this.http
       .post(`${environment.backendUrl}/account/register`, form.value)
       .subscribe(
-        (res) => console.log(res),
+        (res) => {
+          this.messageService.add({
+            severity: PopupState.OK,
+            summary: 'Success',
+            detail: 'Account has been created',
+          });
+        },
         (err) => {
           console.error(err);
         }
@@ -22,10 +40,68 @@ export class AuthService {
 
   loginUser(form: FormGroup) {
     this.http
-      .post(`${environment.backendUrl}/account/login`, form.value)
+      .post<IToken>(`${environment.backendUrl}/account/login`, form.value, {
+        withCredentials: true,
+      })
       .subscribe(
-        (res) => console.log(res),
+        (res) => {
+          console.log(res);
+          this.http
+            .get<IUser>(`${environment.backendUrl}/account/me`)
+            .subscribe((user) => {
+              this.$user.next(user);
+              localStorage.setItem('tokenExpirationDate', res.expirationDate);
+              localStorage.setItem('user', JSON.stringify(user));
+              this.router.navigate(['/']);
+              this.messageService.add({
+                severity: PopupState.OK,
+                summary: 'Success',
+                detail: 'Your are logged in',
+              });
+            });
+        },
         (err) => console.error(err)
       );
+  }
+
+  autoLogin() {
+    const lsUser = localStorage.getItem('user');
+    const tokenExpirationDate = localStorage.getItem('tokenExpirationDate');
+    if (tokenExpirationDate) {
+      const expirationDate = new Date(tokenExpirationDate);
+      const nowDate = new Date();
+      const tempVal = expirationDate.getDay();
+      if (nowDate.getTime() < expirationDate.getTime()) {
+        if (lsUser) {
+          this.$user.next(JSON.parse(lsUser));
+        } else {
+          localStorage.removeItem('tokenExpirationDate');
+          this.$user.next(null);
+        }
+      } else {
+        localStorage.removeItem('user');
+        localStorage.removeItem('tokenExpirationDate');
+        this.$user.next(null);
+      }
+    } else {
+      localStorage.removeItem('user');
+      this.$user.next(null);
+    }
+  }
+
+  logout() {
+    this.http.post(`${environment.backendUrl}/account/logout`, {}).subscribe(
+      (res) => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('tokenExpirationDate');
+        this.$user.next(null);
+        this.messageService.add({
+          severity: PopupState.OK,
+          summary: 'Success',
+          detail: 'Succesfully logged out',
+        });
+      },
+      (err) => console.error(err)
+    );
   }
 }

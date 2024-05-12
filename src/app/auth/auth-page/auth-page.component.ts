@@ -14,6 +14,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { AuthService } from '../auth.service';
 import { InputTextModule } from 'primeng/inputtext';
+import { dateOfBirthValidator } from '../../shared/validators/dateOfBirthValidator';
+import { passwordMatchValidator } from '../../shared/validators/passwordMatchValidator';
 
 @Component({
   selector: 'app-auth-page',
@@ -34,13 +36,21 @@ export class AuthPageComponent implements OnInit {
   protected signUpForm!: FormGroup;
 
   protected signInMode = true;
+  protected today = new Date();
+  protected minDate = new Date();
 
   constructor(private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.minDate.setFullYear(this.today.getFullYear() - 13);
     this.signInForm = this.fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,}$/
+        ),
+      ]),
     });
 
     this.signUpForm = this.fb.group(
@@ -51,15 +61,23 @@ export class AuthPageComponent implements OnInit {
           [
             Validators.required,
             Validators.minLength(6),
-            this.passwordPatternValidator(),
+            Validators.pattern(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,}$/
+            ),
           ],
         ],
-        confirmPassword: ['', Validators.required],
+        confirmPassword: [
+          '',
+          Validators.required,
+          Validators.pattern(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,}$/
+          ),
+        ],
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
-        dateOfBirth: ['', [Validators.required]],
+        dateOfBirth: [null, [Validators.required, dateOfBirthValidator]],
       },
-      { validator: this.passwordMatchValidator }
+      { validator: passwordMatchValidator }
     );
   }
 
@@ -73,26 +91,5 @@ export class AuthPageComponent implements OnInit {
 
   toggleMode() {
     this.signInMode = !this.signInMode;
-  }
-
-  private passwordPatternValidator() {
-    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,}$/;
-    return (control: AbstractControl) => {
-      if (control.value && !pattern.test(control.value)) {
-        return { invalidPassword: true };
-      }
-      return null;
-    };
-  }
-
-  private passwordMatchValidator(form: FormGroup) {
-    const password = form.get('password');
-    const confirmPassword = form.get('confirmPassword');
-
-    if (password!.value !== confirmPassword!.value) {
-      confirmPassword!.setErrors({ passwordMismatch: true });
-    } else {
-      confirmPassword!.setErrors(null);
-    }
   }
 }

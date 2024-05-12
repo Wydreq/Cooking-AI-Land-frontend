@@ -1,0 +1,21 @@
+<div class="full-container">
+  <section class="search-section">
+    <input
+      pInputText
+      id="username"
+      [placeholder]="'SHARED.SEARCH_PLACEHOLDER' | translate"
+    />
+    <p-button
+      icon="pi pi-search"
+      [label]="'SHARED.SEARCH' | translate"
+      [rounded]="true"
+      severity="warning"
+    />
+  </section>
+
+  <main class="recipes-container">
+    @if(recipes){ @for(recipe of recipes.items; track recipe){
+    <h1>{{ recipe.name }}</h1>
+    } }
+  </main>
+</div>

@@ -1,6 +1,24 @@
 <div class="container">
   <h1>Cooking AI Land</h1>
   <div class="tabs-container">
-    <div class="card flex justify-content-center"></div>
+    <div class="card flex justify-content-center">
+      @if(user != null){
+      <button
+        pButton
+        pRipple
+        [label]="'AUTH.LOGOUT' | translate"
+        class="p-button-warning"
+        (click)="logoutHandler()"
+      ></button>
+      } @else {
+      <button
+        pButton
+        pRipple
+        [label]="'AUTH.SIGNIN' | translate"
+        class="p-button-warning"
+        (click)="signInHandler()"
+      ></button>
+      }
+    </div>
   </div>
 </div>

@@ -1,6 +1,7 @@
 {
   "AUTH": {
     "SIGNIN": "Zaloguj się",
+    "LOGOUT": "Wyloguj",
     "SIGNUP": "Zarejestruj się",
     "NO_ACCOUNT": "Nie masz konta? Zarejestruj się",
     "EMAIL": "Adres email",
@@ -8,7 +9,18 @@
     "CONFIRM_PASSWORD": "Potwierdź hasło",
     "FIRSTNAME": "Imię",
     "LASTNAME": "Nazwisko",
-    "DATE_OF_BIRTH": "Data urodzenia"
+    "DATE_OF_BIRTH": "Data urodzenia",
+    "ERRORS": {
+      "EMAIL": "Wprowadź poprawny adres email",
+      "PASSWORD": "Wprowadź silne hasło",
+      "CONFIRM_PASSWORD": "Hasła muszą być takie same",
+      "FIRSTNAME": "Wprowadź imię",
+      "LASTNAME": "Wprowadź nazwisko",
+      "DATE_OF_BIRTH": "Musisz mieć conajmniej 13 lat"
+    }
   },
-  "SHARED": {}
+  "SHARED": {
+    "SEARCH_PLACEHOLDER": "Wyszukaj przepis",
+    "SEARCH": "Szukaj"
+  }
 }

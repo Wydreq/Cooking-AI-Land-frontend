@@ -1,14 +1,26 @@
 {
   "AUTH": {
     "SIGNIN": "Sign in",
+    "LOGOUT": "Logout",
     "SIGNUP": "Sign up",
-    "NO_ACCOUNT": "Dont have an account? Register",
+    "NO_ACCOUNT": "Don't have an account? Register",
     "EMAIL": "Email address",
     "PASSWORD": "Password",
     "CONFIRM_PASSWORD": "Confirm password",
     "FIRSTNAME": "First name",
     "LASTNAME": "Last name",
-    "DATE_OF_BIRTH": "Date of birth"
+    "DATE_OF_BIRTH": "Date of birth",
+    "ERRORS": {
+      "EMAIL": "Insert correct email address",
+      "PASSWORD": "Insert strong password",
+      "CONFIRM_PASSWORD": "Passwords must be the same",
+      "FIRSTNAME": "Insert first name",
+      "LASTNAME": "Insert last name",
+      "DATE_OF_BIRTH": "You must be at least 13 years old"
+    }
   },
-  "SHARED": {}
+  "SHARED": {
+    "SEARCH_PLACEHOLDER": "Search for a recipe",
+    "SEARCH": "Search"
+  }
 }

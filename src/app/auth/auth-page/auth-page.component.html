@@ -14,10 +14,15 @@
       <label for="username">{{ "AUTH.EMAIL" | translate }}</label>
       <input
         pInputText
-        id="username"
-        aria-describedby="username-help"
+        id="email"
+        aria-describedby="email-help"
         formControlName="email"
       />
+      @if(signInForm.get('email')!.invalid && signInForm.get('email')!.touched){
+      <small id="email-help" class="red-err">
+        {{ "AUTH.ERRORS.EMAIL" | translate }}
+      </small>
+      }
       <label for="password">{{ "AUTH.PASSWORD" | translate }}</label>
       <input
         pInputText
@@ -26,6 +31,12 @@
         type="password"
         formControlName="password"
       />
+      @if(signInForm.get('password')!.invalid &&
+      signInForm.get('password')!.touched){
+      <small id="email-help" class="red-err">
+        {{ "AUTH.ERRORS.PASSWORD" | translate }}
+      </small>
+      }
       <span class="no-account" (click)="toggleMode()">{{
         "AUTH.NO_ACCOUNT" | translate
       }}</span>
@@ -50,6 +61,11 @@
         aria-describedby="username-help"
         formControlName="email"
       />
+      @if(signUpForm.get('email')!.invalid && signUpForm.get('email')!.touched){
+      <small id="email-help" class="red-err">
+        {{ "AUTH.ERRORS.EMAIL" | translate }}
+      </small>
+      }
       <div class="form-row">
         <div class="input-cont">
           <label for="password">{{ "AUTH.PASSWORD" | translate }}</label>
@@ -60,6 +76,12 @@
             type="password"
             formControlName="password"
           />
+          @if(signUpForm.get('password')!.invalid &&
+          signUpForm.get('password')!.touched){
+          <small id="email-help" class="red-err">
+            {{ "AUTH.ERRORS.PASSWORD" | translate }}
+          </small>
+          }
         </div>
         <div class="input-cont">
           <label for="confirmPassword">{{
@@ -72,6 +94,12 @@
             type="password"
             formControlName="confirmPassword"
           />
+          @if(signUpForm.get('confirmPassword')!.invalid &&
+          signUpForm.get('confirmPassword')!.touched){
+          <small id="email-help" class="red-err">
+            {{ "AUTH.ERRORS.CONFIRM_PASSWORD" | translate }}
+          </small>
+          }
         </div>
       </div>
       <div class="form-row">
@@ -83,6 +111,12 @@
             aria-describedby="username-help"
             formControlName="firstName"
           />
+          @if(signUpForm.get('firstName')!.invalid &&
+          signUpForm.get('firstName')!.touched){
+          <small id="email-help" class="red-err">
+            {{ "AUTH.ERRORS.FIRSTNAME" | translate }}
+          </small>
+          }
         </div>
         <div class="input-cont">
           <label for="lastName">{{ "AUTH.LASTNAME" | translate }}</label>
@@ -92,6 +126,12 @@
             aria-describedby="username-help"
             formControlName="lastName"
           />
+          @if(signUpForm.get('lastName')!.invalid &&
+          signUpForm.get('lastName')!.touched){
+          <small id="email-help" class="red-err">
+            {{ "AUTH.ERRORS.LASTNAME" | translate }}
+          </small>
+          }
         </div>
       </div>
 
@@ -101,7 +141,14 @@
         [showIcon]="true"
         inputId="icondisplay"
         formControlName="dateOfBirth"
+        dateFormat="dd.mm.yy"
       />
+      @if(signUpForm.get('dateOfBirth')!.invalid &&
+      signUpForm.get('dateOfBirth')!.touched){
+      <small id="email-help" class="red-err">
+        {{ "AUTH.ERRORS.DATE_OF_BIRTH" | translate }}
+      </small>
+      }
       <span class="no-account" (click)="toggleMode()">{{
         "AUTH.NO_ACCOUNT" | translate
       }}</span>
