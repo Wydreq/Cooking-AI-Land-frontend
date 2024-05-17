@@ -7,7 +7,6 @@ import { BehaviorSubject } from 'rxjs';
 import { IUser } from '../shared/interfaces/user.interface';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { producerUpdateValueVersion } from '@angular/core/primitives/signals';
 import { PopupState } from '../shared/types/PopupState';
 @Injectable({
   providedIn: 'root',
@@ -25,7 +24,7 @@ export class AuthService {
     this.http
       .post(`${environment.backendUrl}/account/register`, form.value)
       .subscribe(
-        (res) => {
+        () => {
           this.messageService.add({
             severity: PopupState.OK,
             summary: 'Success',
@@ -49,6 +48,7 @@ export class AuthService {
           this.http
             .get<IUser>(`${environment.backendUrl}/account/me`)
             .subscribe((user) => {
+              console.log(user);
               this.$user.next(user);
               localStorage.setItem('tokenExpirationDate', res.expirationDate);
               localStorage.setItem('user', JSON.stringify(user));
@@ -70,7 +70,6 @@ export class AuthService {
     if (tokenExpirationDate) {
       const expirationDate = new Date(tokenExpirationDate);
       const nowDate = new Date();
-      const tempVal = expirationDate.getDay();
       if (nowDate.getTime() < expirationDate.getTime()) {
         if (lsUser) {
           this.$user.next(JSON.parse(lsUser));
@@ -91,10 +90,11 @@ export class AuthService {
 
   logout() {
     this.http.post(`${environment.backendUrl}/account/logout`, {}).subscribe(
-      (res) => {
+      () => {
         localStorage.removeItem('user');
         localStorage.removeItem('tokenExpirationDate');
         this.$user.next(null);
+        this.router.navigate(['/auth']);
         this.messageService.add({
           severity: PopupState.OK,
           summary: 'Success',

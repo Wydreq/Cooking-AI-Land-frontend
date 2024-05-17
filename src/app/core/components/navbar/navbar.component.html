@@ -2,15 +2,25 @@
   <h1>Cooking AI Land</h1>
   <div class="tabs-container">
     <div class="card flex justify-content-center">
-      @if(user != null){
-      <button
-        pButton
-        pRipple
-        [label]="'AUTH.LOGOUT' | translate"
-        class="p-button-warning"
-        (click)="logoutHandler()"
-      ></button>
+      @if(user != null){ @if(user.photoUrl) {
+      <p-avatar
+        [image]="user.photoUrl"
+        styleClass="mr-2"
+        size="large"
+        shape="circle"
+        (click)="menu.toggle($event)"
+      />
       } @else {
+
+      <p-avatar
+        [label]="user.firstName[0] + user.lastName[0]"
+        styleClass="mr-2"
+        size="large"
+        [style]="{ 'background-color': 'orange', color: 'white' }"
+        shape="circle"
+        (click)="menu.toggle($event)"
+      />
+      } } @else {
       <button
         pButton
         pRipple
@@ -19,6 +29,7 @@
         (click)="signInHandler()"
       ></button>
       }
+      <p-menu #menu [model]="items" [popup]="true" class="popup" />
     </div>
   </div>
 </div>

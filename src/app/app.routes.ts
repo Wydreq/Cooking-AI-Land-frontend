@@ -1,12 +1,10 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth.guard';
 import { loggedInGuard } from './core/guards/logged-in.guard';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-
     loadComponent: () =>
       import('./home/home-page/home-page.component').then(
         (m) => m.HomePageComponent
@@ -20,4 +18,8 @@ export const routes: Routes = [
         (m) => m.AuthPageComponent
       ),
   },
+  {
+    path: 'cookbooks',
+    loadChildren: () => import('./cookbooks/cookbooks.routes').then(m => m.COOKBOOKS_ROUTES)
+  }
 ];

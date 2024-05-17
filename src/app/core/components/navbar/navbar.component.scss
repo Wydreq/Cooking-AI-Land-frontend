@@ -1,6 +1,15 @@
+:host ::ng-deep .p-avatar {
+  border: 2px solid orange;
+
+  &:hover {
+    border: 2px solid black;
+    cursor: pointer;
+  }
+}
+
 .container {
   border-bottom: 3px solid orange;
-  padding: 0px 15px;
+  padding: 0 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -15,6 +24,10 @@
       color: white;
       background-color: orange;
       padding: 10px;
+    }
+
+    .popup {
+      margin-top: 10px;
     }
   }
 }

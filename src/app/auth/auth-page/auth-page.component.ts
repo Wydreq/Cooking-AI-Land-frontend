@@ -1,7 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -16,6 +14,8 @@ import { AuthService } from '../auth.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { dateOfBirthValidator } from '../../shared/validators/dateOfBirthValidator';
 import { passwordMatchValidator } from '../../shared/validators/passwordMatchValidator';
+import {CommonModule} from "@angular/common";
+import {RippleModule} from "primeng/ripple";
 
 @Component({
   selector: 'app-auth-page',
@@ -27,6 +27,8 @@ import { passwordMatchValidator } from '../../shared/validators/passwordMatchVal
     ReactiveFormsModule,
     CalendarModule,
     InputTextModule,
+    CommonModule,
+    RippleModule
   ],
   templateUrl: './auth-page.component.html',
   styleUrl: './auth-page.component.scss',
@@ -45,12 +47,7 @@ export class AuthPageComponent implements OnInit {
     this.minDate.setFullYear(this.today.getFullYear() - 13);
     this.signInForm = this.fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.pattern(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,}$/
-        ),
-      ]),
+      password: new FormControl('', [Validators.required]),
     });
 
     this.signUpForm = this.fb.group(
